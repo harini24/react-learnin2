@@ -11,13 +11,13 @@ const Cart = props => {
     const hasItems = cartCtx.items.length>0
 
     const cartItemRemoveHandler = id =>{
-
+        cartCtx.removeItem(id)
     }
     const CartItemAddHandler = item =>{
-
+        cartCtx.addItem({...item,amount:1})
     }
     const cartItems = <ul className={classes['cart-items']}>{cartCtx.items.map(item => {
-       return <CartItem key={item.id} name={item.name} amount={item.amount} price={item.price} onRemove={cartItemRemoveHandler.bind(null,item.id)} onadd={CartItemAddHandler.bind(null,item)}></CartItem>
+       return <CartItem key={item.id} name={item.name} amount={item.amount} price={item.price} onRemove={cartItemRemoveHandler.bind(null,item.id)} onAdd={CartItemAddHandler.bind(null,item)}></CartItem>
     })}</ul>
     return <Modal onClick={props.hideCart}>
         {cartItems}
