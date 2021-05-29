@@ -6,7 +6,7 @@ const defaultCartState = {
     totalAmount: 0
 }
 const cartReducer = (state, action) => {
-    
+
     if (action.type === 'ADD_CART_ITEM') {
         // const updatedItems=state.items.concat(action.item)//given an entirely new array where as push edits existing one
         const updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount
@@ -38,10 +38,10 @@ const cartReducer = (state, action) => {
         console.log("ADD_CART_ITEM", action)
         const existingCartItemIndex = state.items.findIndex(item => item.id == action.id)
         const existingCartItem = state.items[existingCartItemIndex]
-        const updatedTotalAmount = state.totalAmount - existingCartItem.price 
+        const updatedTotalAmount = state.totalAmount - existingCartItem.price
         let updatedItem;
         let updatedItems;
-        if (existingCartItem.amount>1) {
+        if (existingCartItem.amount > 1) {
             updatedItem = {
                 ...existingCartItem,
                 amount: existingCartItem.amount - 1
@@ -50,7 +50,7 @@ const cartReducer = (state, action) => {
             updatedItems = [...state.items]
             updatedItems[existingCartItemIndex] = updatedItem
         } else {
-            updatedItems = state.items.filter(item=>item.id != action.id)
+            updatedItems = state.items.filter(item => item.id != action.id)
         }
         console.log("in cartReducer", updatedItems)
         return {
@@ -71,11 +71,15 @@ const CartProvider = props => {
         dispatchCartACtion({ type: 'REMOVE_CART_ITEM', id: id })
     }
 
+    const clearcarthandler = () => {
+        dispatchCartACtion({ type: 'CLEAR' })
+    }
     const cartContext = {
         items: cartState.items,
         totalAmount: cartState.totalAmount,
         addItem: addItemHandler,
-        removeItem: removeItemHandler
+        removeItem: removeItemHandler,
+        clearCart: clearcarthandler
     }
     console.log(cartContext)
     return <CartContect.Provider value={cartContext}>
